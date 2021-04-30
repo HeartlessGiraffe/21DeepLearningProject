@@ -12,19 +12,25 @@
 
  data/cifar-10-batches-py/data_batch_k and also test_batch
  ### Training:
- #### for training with different dataset transformers:
+ #### For training with different dataset transformers:
     python cifar10_transform.py -t k
+
  - k=0,1,2,3 for different type of transforms
- -- 0-notransformation 
- -- 1-HorizontalFlip
- -- 2-Erasing
- -- 3-notransformation+halftrainset
+    - 0-notransformation 
+    - 1-HorizontalFlip
+    - 2-Erasing
+    - 3-notransformation+halftrainset
+
+ #### For training with different optimizer and activation:
+ Just run corresponding python files directly.
+ 
  ### Testing:
  - Save the trained pth file as 
  trained_model/model.pth
  and then
 
     python cifar10_test.py -a k
+
  k=0,1,2 for sigmoid, tanh, relu activiation functions
 
  default k = 2

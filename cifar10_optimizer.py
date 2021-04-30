@@ -65,7 +65,7 @@ if __name__ == '__main__':
         actfun = 'sigmoid'
         # 计算实验耗时
         start_time = datetime.now()
-        net = ResNet(ResidualBlock, actfun).to(device)
+        net = ResNet(ResidualBlock, actfun=actfun).to(device)
         print(net)
         # 创建tensorboard文件夹
         writer_train_loss = SummaryWriter('./runs/train/' + actfun)

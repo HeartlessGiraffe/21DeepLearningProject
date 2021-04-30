@@ -76,13 +76,15 @@ if __name__ == '__main__':
     writer_train_loss_lr2 = SummaryWriter('./runs/train_{}/train_loss_lr2'.format(transform_type))
     writer_test_acc_lr2 = SummaryWriter('./runs/test_{}/test_acc_lr2'.format(transform_type))
     loss_function = nn.CrossEntropyLoss()
+    optimizer2 = torch.optim.SGD(net.parameters(), lr=lr)
     print('transform_type:', transform_type)
     for epoch in range(num_epoch):
         if epoch > num_epoch * 2/3 :
             lr = lr * 0.09
         elif epoch > num_epoch * 1/3:
             lr = lr * 0.3
-        optimizer2 = torch.optim.SGD(net.parameters(), lr=lr)
+        for param_group in optimizer2.param_groups:
+            param_group['lr'] = lr
         if continue_training and epoch + 1 < continue_from_epoch:
             print('Epoch {} jumped.'.format(epoch+1))
             continue

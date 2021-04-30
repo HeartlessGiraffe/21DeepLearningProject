@@ -3,10 +3,10 @@
 
  ### To run the code:
 
- cd 21DeepLearningProject
- mkdir check_points
- mkdir data
- mkdir trained_model
+    cd 21DeepLearningProject
+    mkdir check_points
+    mkdir data
+    mkdir trained_model
 
  - Be sure that the cifar_10 data is at:
 
@@ -17,8 +17,8 @@
  trained_model/model.pth
  and then
 
- <h1> python cifar10_test.py -a k</h1>
+    python cifar10_test.py -a k
  k=0,1,2 for sigmoid, tanh, relu activiation functions
- 
+
  default k = 2
 

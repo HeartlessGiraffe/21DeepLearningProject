@@ -49,6 +49,14 @@ test_set = torchvision.datasets.CIFAR10(root='./data', train=False,
 test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size,
                                           shuffle=False, num_workers=2)
 
+
+def adjust_learning_rate(optimizer, epoch):
+    """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
+    lr = 0.1 * (0.1 ** (epoch // 3))
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr
+
+
 if __name__ == '__main__':
     # 用于实验的三种激活函数
     actfuns = ['sigmoid', 'tanh', 'relu']
@@ -69,16 +77,16 @@ if __name__ == '__main__':
         # train_loss = []
         # train_accu = []
         # accuracy = []
-
+        optimizer0 = torch.optim.SGD(net.parameters(), lr=lr0)
 
         for epoch in range(num_epoch):
             print('\nEpoch: %d' % (epoch + 1))
             if epoch > 0 and epoch % 3 == 0:
                 lr0 *= 0.1
                 print('learning_rate=', lr0)
+            adjust_learning_rate(optimizer0, epoch)
             # optimizer0 = torch.optim.Adam(net.parameters(), lr=lr0, betas=(0.9, 0.99))
             # 使用SGD作为优化器，用于观察因学习率的变化而发声的loss骤降
-            optimizer0 = torch.optim.SGD(net.parameters(), lr=lr0)
             net.train()
             sum_loss = 0.0
             correct = 0.0

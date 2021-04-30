@@ -49,6 +49,14 @@ test_set = torchvision.datasets.CIFAR10(root='./data', train=False,
 test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size,
                                           shuffle=False, num_workers=2)
 
+
+def adjust_learning_rate(optimizer, epoch):
+    """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
+    lr = 0.1 * (0.1 ** (epoch // 3))
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr
+
+
 if __name__ == '__main__':
     # 用于实验的三种优化器
     optims = ['Adam', 'Adagrad', 'SGD']
@@ -69,19 +77,20 @@ if __name__ == '__main__':
         # train_loss = []
         # train_accu = []
         # accuracy = []
-
+        if optim == 'Adam':
+            optimizer0 = torch.optim.Adam(net.parameters(), lr=lr0, betas=(0.9, 0.99))
+        elif optim == 'Adagrad':
+            optimizer0 = torch.optim.Adagrad(net.parameters(), lr=0.01, lr_decay=0, weight_decay=0, initial_accumulator_value=0)
+        elif optim == 'SGD':
+            optimizer0 = torch.optim.SGD(net.parameters(), lr=lr0)
 
         for epoch in range(num_epoch):
             print('\nEpoch: %d' % (epoch + 1))
             if epoch > 0 and epoch % 3 == 0:
                 lr0 *= 0.1
                 print('learning_rate=', lr0)
-            if optim == 'Adam':
-                optimizer0 = torch.optim.Adam(net.parameters(), lr=lr0, betas=(0.9, 0.99))
-            elif optim == 'Adagrad':
-                optimizer0 = torch.optim.Adagrad(net.parameters(), lr=0.01, lr_decay=0, weight_decay=0, initial_accumulator_value=0)
-            elif optim == 'SGD':
-                optimizer0 = torch.optim.SGD(net.parameters(), lr=lr0)
+            
+            adjust_learning_rate(optimizer0, epoch)
             net.train()
             sum_loss = 0.0
             correct = 0.0

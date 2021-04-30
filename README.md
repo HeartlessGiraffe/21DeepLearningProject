@@ -34,4 +34,5 @@ mkdir trained_model
  python cifar10_test.py -a k
  ```
  - k=0,1,2 for sigmoid, tanh, relu activiation functions, default k = 2.
+ - Download Trained Model at https://pan.baidu.com/s/1QLIp24xQJUrKIpwHFSaOAg pw:4qo3
 

@@ -23,7 +23,7 @@
 
  #### For training with different optimizer and activation:
  Just run corresponding python files directly.
- 
+
  ### Testing:
  - Save the trained pth file as 
  trained_model/model.pth
@@ -31,7 +31,5 @@
 
     python cifar10_test.py -a k
 
- k=0,1,2 for sigmoid, tanh, relu activiation functions
-
- default k = 2
+ - k=0,1,2 for sigmoid, tanh, relu activiation functions, default k = 2.
 
